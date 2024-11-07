@@ -1,0 +1,33 @@
+**enemy:
+	hp (randomize range)
+	movement (randomize speed range)
+	attack (randomize attack range)
+	drop object
+
+*object:
+	health restore
+	projectile speed up (for a time)
+	damage boost
+
+projectile
+	speed up implement
+
+*player
+	slash
+	
+
+**updates
+	game pitch
+	splash screen - settings
+	game mechanics guide
+	basic objective update
+	synopsis
+
+*room
+	
+	2/3 variants
+	implement entering the room - entrance blocked
+	implement leaving the room - exit opens
+
+**hud
+	health bar top
