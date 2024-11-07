@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://fhhrr1m66o3u"]
+
+[ext_resource type="Script" path="res://Scenes/projectile.gd" id="1_y1gs1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_b3uy2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5opcq"]
+
+[node name="Projectile" type="CharacterBody2D"]
+top_level = true
+position = Vector2(2, 2)
+scale = Vector2(4.0034, 5)
+collision_mask = 4
+script = ExtResource("1_y1gs1")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(1.49873, 1.2)
+scale = Vector2(1.25021, 1)
+mesh = SubResource("SphereMesh_b3uy2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.49873, 1.2)
+scale = Vector2(0.0467566, 0.03422)
+shape = SubResource("CircleShape2D_5opcq")

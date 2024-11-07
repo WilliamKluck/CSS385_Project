@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://4rn0xkuqdlh6"]
+
+[ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_5be2h"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_tfwmi"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ee32w"]
+radius = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cykxs"]
+radius = 32.0
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_mask = 7
+script = ExtResource("1_5be2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(1.90735e-06, 0)
+scale = Vector2(43.5499, 42.5)
+mesh = SubResource("SphereMesh_tfwmi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ee32w")
+
+[node name="Projectile Detector" type="Area2D" parent="."]
+scale = Vector2(1.04, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile Detector"]
+shape = SubResource("CircleShape2D_cykxs")
+
+[connection signal="body_entered" from="Projectile Detector" to="." method="_on_projectile_detector_body_entered"]
