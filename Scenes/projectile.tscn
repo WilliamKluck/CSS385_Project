@@ -10,7 +10,8 @@
 top_level = true
 position = Vector2(2, 2)
 scale = Vector2(4.0034, 5)
-collision_mask = 4
+collision_layer = 8
+collision_mask = 8
 script = ExtResource("1_y1gs1")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]

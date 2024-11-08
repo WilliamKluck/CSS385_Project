@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://reggauq4vlhj"]
+
+[ext_resource type="Script" path="res://Scenes/rich_text_label.gd" id="1_mjleh"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="HPLabel" type="RichTextLabel" parent="."]
+offset_left = 20.0
+offset_top = 21.0
+offset_right = 452.0
+offset_bottom = 48.0
+script = ExtResource("1_mjleh")

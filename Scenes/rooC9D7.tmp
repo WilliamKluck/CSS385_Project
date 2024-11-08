@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://culwwhothebat"]
+[gd_scene load_steps=7 format=3 uid="uid://culwwhothebat"]
 
 [ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/mainlevbuild.png" id="1_glev2"]
 [ext_resource type="Script" path="res://Scenes/room.gd" id="2_3qs87"]
 [ext_resource type="PackedScene" uid="uid://c4jjwpwgl261n" path="res://Scenes/Player.tscn" id="2_7uw3i"]
 [ext_resource type="PackedScene" uid="uid://4rn0xkuqdlh6" path="res://Scenes/Enemy.tscn" id="3_p5vpr"]
-[ext_resource type="PackedScene" uid="uid://reggauq4vlhj" path="res://Scenes/hud.tscn" id="5_ev4xr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_40et1"]
 texture = ExtResource("1_glev2")
@@ -1039,8 +1038,7 @@ texture = ExtResource("1_glev2")
 14:33/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_puo0h"]
-physics_layer_0/collision_layer = 1
-physics_layer_0/collision_mask = 6
+physics_layer_0/collision_layer = 2
 sources/0 = SubResource("TileSetAtlasSource_40et1")
 
 [node name="TileMap" type="TileMap"]
@@ -1056,7 +1054,7 @@ layer_1/tile_data = PackedInt32Array(0, 262144, 11, 1, 327680, 11, 2, 393216, 11
 script = ExtResource("2_3qs87")
 
 [node name="Player" parent="." instance=ExtResource("2_7uw3i")]
-position = Vector2(68.7215, 159.032)
+position = Vector2(194.598, 8.17879)
 disable_mode = 2
 
 [node name="Enemy" parent="." instance=ExtResource("3_p5vpr")]
@@ -1067,5 +1065,3 @@ position = Vector2(169.422, 128.589)
 
 [node name="Enemy3" parent="." instance=ExtResource("3_p5vpr")]
 position = Vector2(255.494, 37.2591)
-
-[node name="HUD" parent="." instance=ExtResource("5_ev4xr")]
