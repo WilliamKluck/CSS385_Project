@@ -1,8 +1,10 @@
 **enemy:
-	hp (randomize range)
-	movement (randomize speed range)
-	attack (randomize attack range)
+	☑️ hp
+	☑️ movement
+	☑️ attack
+	attack animation
 	drop object
+	randomize hp, speed, attack ranges
 
 *object:
 	health restore
@@ -14,11 +16,12 @@ projectile
 
 *player
 	slash
+	☑️ shoot
 	
 
 **updates
 	game pitch
-	splash screen - settings
+	☑️ splash screen
 	game mechanics guide
 	basic objective update
 	synopsis
@@ -30,4 +33,4 @@ projectile
 	implement leaving the room - exit opens
 
 **hud
-	health bar top
+	☑️ health bar top
