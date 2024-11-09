@@ -14,9 +14,37 @@ var has_gone = 0
 var hp = 10
 const heart = "❤️"
 var flag = 0
+var enter_from = "Left"
+var dict = {"Left": Vector2(182.9998, 391.9999), "Top": Vector2(613.0012, 221.9999), "Right": Vector2(1097.999, 408.9995), "Bottom": Vector2(614.9999, 604.9991)}
+var room_node = null
+var target_position = null
 
 func _ready() -> void:
+	room_node = get_node("..")
+	if enter_from:
+		var enter_node = get_node("../" + enter_from)
+		set_global_position(enter_node.get_global_position())
+		print(get_global_position())
 	get_node("../HUD/HPLabel").set_text(heart.repeat(hp))
+	target_position = dict[enter_from]
+
+func _physics_process(delta: float) -> void:
+	if room_node.begin:
+		if has_gone == 0:
+			has_gone = 1
+			go()
+		handleInput()
+		doDamage()
+	else:
+		# Calculate the vector toward the target position
+		var direction_vector = target_position - get_global_position()
+		# Check if close enough to the target position
+		if direction_vector.length() < 2.1: # Threshold for stopping movement
+			print("Arrived at target position!")
+			room_node.begin = 1
+		velocity = direction_vector * 2
+	
+	move_and_slide()
 
 func go():
 	for i in range(max_projectiles):
@@ -30,22 +58,15 @@ func go():
 			#print(s)
 	print(get_node("..").get_children())
 	
-func _physics_process(delta: float) -> void:
-	if has_gone == 0:
-		has_gone = 1
-		go()
-	handleInput()
-	doDamage()
-	move_and_slide()
-
-func handleInput():
-	var moveDirection = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	
+func move(moveDirection) -> void:
 	# save last known facing direction
 	if moveDirection != Vector2(0,0):
 		character_facing = moveDirection
-
 	velocity = moveDirection * SPEED
+	
+func handleInput():
+	var moveDirection = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	move(moveDirection)
 	
 	#print(Input.is_action_pressed("shoot"))
 	

@@ -3,16 +3,22 @@ extends CharacterBody2D
 
 const SPEED = 100.0
 var hp = 100
+var room_node = null
+var player_node = null
 
+func _ready():
+	room_node = get_node("..")
+	player_node = get_node("../Player")
 
 func _physics_process(delta: float) -> void:
-	var player = get_node("../Player")
-	#print(player)
-	var direction = (player.get_global_position() - get_global_position()).normalized()
+	if room_node.begin:
+		move()
+		move_and_slide()
+
+func move() -> void:
+	var direction = (player_node.get_global_position() - get_global_position()).normalized()
 	velocity = direction * SPEED
-	move_and_slide()
-
-
+	
 func _on_projectile_detector_body_entered(body: Node2D) -> void:
 	#print("body entered")
 	#print(body.name)
