@@ -9,7 +9,7 @@ var room_node = null
 func _ready():
 	room_node = get_node("..")
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if room_node.begin:
 		movement()
 		check_position()
