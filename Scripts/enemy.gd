@@ -20,18 +20,12 @@ func move() -> void:
 	velocity = direction * SPEED
 	
 func _on_projectile_detector_body_entered(body: Node2D) -> void:
-	#print("body entered")
-	#print(body.name)
 	if body.to_string().begins_with("Projectile"):
 		print(hp)
-		#body.visible = false
 		body.set_global_position(Vector2(-10,-10))
 		body.active = false
 		body.direction = null
 		hp -= 25
 		
 		if hp <= 0:
-			# die
-			print("die")
 			queue_free()
-		print("enemy hit")

@@ -22,7 +22,7 @@ var target_position = null
 func _ready() -> void:
 	room_node = get_node("..")
 	if enter_from:
-		var enter_node = get_node("../" + enter_from)
+		var enter_node = get_node("../RoomEntryPoints/" + enter_from)
 		set_global_position(enter_node.get_global_position())
 		print(get_global_position())
 	get_node("../HUD/HPLabel").set_text(heart.repeat(hp))
@@ -49,13 +49,9 @@ func _physics_process(delta: float) -> void:
 func go():
 	for i in range(max_projectiles):
 		var new_projectile = load("res://Scenes/projectile.tscn").instantiate()
-		print(new_projectile)
 		new_projectile.name = "Projectile" + str(i)
 		get_node("..").add_child(new_projectile)
 		projectiles.append(new_projectile)
-		#print(new_projectile.get_property_list())
-		#for s in new_projectile.get_property_list():
-			#print(s)
 	print(get_node("..").get_children())
 	
 func move(moveDirection) -> void:
