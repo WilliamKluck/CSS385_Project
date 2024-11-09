@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://4rn0xkuqdlh6"]
 
-[ext_resource type="Script" path="res://Scenes/enemy.gd" id="1_5be2h"]
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_5be2h"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_tfwmi"]
 

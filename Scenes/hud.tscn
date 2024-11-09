@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://reggauq4vlhj"]
 
-[ext_resource type="Script" path="res://Scenes/rich_text_label.gd" id="1_mjleh"]
+[ext_resource type="Script" path="res://Scripts/rich_text_label.gd" id="1_mjleh"]
 
 [node name="HUD" type="CanvasLayer"]
 
