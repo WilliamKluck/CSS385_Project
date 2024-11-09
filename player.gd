@@ -93,8 +93,12 @@ func doDamage() -> void:
 	if flag > 0 and ((last_hit_tick and Time.get_ticks_msec() - last_hit_tick > hit_delay) or not last_hit_tick):
 		#print("enemy detected")
 		print(flag)
-		hp -= 1
+		hp = max(hp - 1, 0)
 		#var old_hp_text = get_node("../HUD/HPLabel").get_text()
 		get_node("../HUD/HPLabel").set_text(heart.repeat(hp))
 		last_hit_tick = Time.get_ticks_msec()
 		#timer = Time.get_ticks_msec()
+		if hp == 0:
+			# player has died
+			# TODO: trigger death screen, or reset the game, or sth
+			pass
