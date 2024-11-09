@@ -7,10 +7,10 @@ var room_node = null
 var player_node = null
 
 func _ready():
-	room_node = get_node("..")
-	player_node = get_node("../Player")
+	room_node = get_node("../..")
+	player_node = get_node("../../Player")
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if room_node.begin:
 		move()
 		move_and_slide()
@@ -21,7 +21,6 @@ func move() -> void:
 	
 func _on_projectile_detector_body_entered(body: Node2D) -> void:
 	if body.to_string().begins_with("Projectile"):
-		print(hp)
 		body.set_global_position(Vector2(-10,-10))
 		body.active = false
 		body.direction = null

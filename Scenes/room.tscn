@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c4jjwpwgl261n" path="res://Scenes/Player.tscn" id="2_7uw3i"]
 [ext_resource type="PackedScene" uid="uid://4rn0xkuqdlh6" path="res://Scenes/Enemy.tscn" id="3_p5vpr"]
 [ext_resource type="PackedScene" uid="uid://reggauq4vlhj" path="res://Scenes/hud.tscn" id="5_ev4xr"]
-[ext_resource type="Script" path="res://Scenes/room_blockers.gd" id="6_tnhp5"]
+[ext_resource type="Script" path="res://Scripts/room_blockers.gd" id="6_tnhp5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_40et1"]
 texture = ExtResource("1_glev2")
@@ -2097,15 +2097,6 @@ z_index = 1
 position = Vector2(187.113, 196.291)
 disable_mode = 2
 
-[node name="Enemy" parent="." instance=ExtResource("3_p5vpr")]
-position = Vector2(90.1543, 34.5328)
-
-[node name="Enemy2" parent="." instance=ExtResource("3_p5vpr")]
-position = Vector2(169.422, 128.589)
-
-[node name="Enemy3" parent="." instance=ExtResource("3_p5vpr")]
-position = Vector2(255.494, 37.2591)
-
 [node name="HUD" parent="." instance=ExtResource("5_ev4xr")]
 
 [node name="RoomBlockers" type="TileMap" parent="."]
@@ -2131,4 +2122,64 @@ scale = Vector2(2.9394, 2.20081)
 
 [node name="Bottom" type="Node2D" parent="RoomEntryPoints"]
 position = Vector2(629, 680.001)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("3_p5vpr")]
+position = Vector2(877, 585)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("3_p5vpr")]
+position = Vector2(628, 436)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("3_p5vpr")]
+position = Vector2(1088, 585)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPositions" type="Node" parent="."]
+
+[node name="EnemyPos1" type="Node2D" parent="EnemyPositions"]
+position = Vector2(171, 287)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos2" type="Node2D" parent="EnemyPositions"]
+position = Vector2(373, 287)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos3" type="Node2D" parent="EnemyPositions"]
+position = Vector2(877, 287)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos4" type="Node2D" parent="EnemyPositions"]
+position = Vector2(1088, 287)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos5" type="Node2D" parent="EnemyPositions"]
+position = Vector2(373, 436)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos6" type="Node2D" parent="EnemyPositions"]
+position = Vector2(630, 436)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos7" type="Node2D" parent="EnemyPositions"]
+position = Vector2(877, 436)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos8" type="Node2D" parent="EnemyPositions"]
+position = Vector2(171, 585)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos9" type="Node2D" parent="EnemyPositions"]
+position = Vector2(373, 585)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos10" type="Node2D" parent="EnemyPositions"]
+position = Vector2(877, 585)
+scale = Vector2(2.9394, 2.20081)
+
+[node name="EnemyPos11" type="Node2D" parent="EnemyPositions"]
+position = Vector2(1088, 585)
 scale = Vector2(2.9394, 2.20081)

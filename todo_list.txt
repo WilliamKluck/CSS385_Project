@@ -29,8 +29,8 @@ projectile
 *room
 	
 	2/3 variants
-	implement entering the room - entrance blocked
-	implement leaving the room - exit opens
+	☑️ implement entering the room - entrance blocked
+	☑️ implement leaving the room - exit opens
 
 **hud
 	☑️ health bar top

@@ -4,7 +4,7 @@ var room_node = null
 var enemy_nodes = []
 func _ready():
 	room_node = get_node("..")
-	var children = room_node.get_children()
+	var children = get_node("../Enemies/").get_children()
 	for node in children:
 		if node.get_name().begins_with("Enemy"):
 			enemy_nodes.append(node)
@@ -16,7 +16,7 @@ func _ready():
 	tile_set.set_physics_layer_collision_mask(0, 0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if room_node.begin == 1:
 		enable_tiles()
 	for node in enemy_nodes:
