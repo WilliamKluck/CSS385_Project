@@ -23,7 +23,7 @@ func _process(_delta: float) -> void:
 		if not node:
 			enemy_nodes.erase(node)
 			if len(enemy_nodes) == 0:
-				room_node.begin = 2
+				room_node.begin = 2 
 				disable_tiles()
 	
 func enable_tiles() -> void:
