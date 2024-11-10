@@ -2126,7 +2126,7 @@ scale = Vector2(2.9394, 2.20081)
 
 [node name="Enemies" type="Node" parent="."]
 
-[node name="Enemy" parent="Enemies" instance=ExtResource("3_p5vpr")]
+[node name="Enemy1" parent="Enemies" instance=ExtResource("3_p5vpr")]
 position = Vector2(877, 585)
 scale = Vector2(2.9394, 2.20081)
 
