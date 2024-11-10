@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://hu0ic4wwc08o"]
+
+[ext_resource type="Texture2D" uid="uid://pjhfvvfi1f5i" path="res://Assets/candleA_01.png" id="1_0nsdy"]
+[ext_resource type="Texture2D" uid="uid://bn355gsl5gblp" path="res://Assets/candleA_02.png" id="2_cn4l1"]
+[ext_resource type="Texture2D" uid="uid://jd8evsx8epxd" path="res://Assets/candleA_03.png" id="3_cwsck"]
+[ext_resource type="Texture2D" uid="uid://c56ltlv5qivn4" path="res://Assets/candleA_04.png" id="4_hfanx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ooxnb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0nsdy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_cn4l1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_cwsck")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hfanx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Light" type="AnimatedSprite2D"]
+rotation = 3.14159
+sprite_frames = SubResource("SpriteFrames_ooxnb")
+frame_progress = 0.820738
+centered = false
+flip_v = true

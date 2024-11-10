@@ -1,6 +1,6 @@
 extends TileMap
 
-var begin = null
+var begin = null # 0 is before, 1 is during, 2 is after
 var enemies = []
 var rng = RandomNumberGenerator.new()
 # Called when the node enters the scene tree for the first time.
