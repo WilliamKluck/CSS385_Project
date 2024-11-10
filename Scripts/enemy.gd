@@ -16,7 +16,7 @@ func _physics_process(_delta: float) -> void:
 	room_node = get_node("../..")
 	# get player nodef for checking player position
 	player_node = get_node("../../Player")
-  frame += 1
+	frame += 1
   
 	# if scene begins, begin movement
 	if room_node.begin == 1:
