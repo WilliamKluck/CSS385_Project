@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 
 const SPEED = 400.0
+var power = 1
 var direction = null
 var active = false
 var room_node = null

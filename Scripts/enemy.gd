@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
-const SPEED = 100.0
 const jitter_angle = 25
 const jitter_duration = 5	# frames
-var hp = 100
+var SPEED = 100.0
+var power = 1
+var hp = 4
 var room_node = null
 var player_node = null
 var frame: int = -1
@@ -40,7 +41,7 @@ func _on_projectile_detector_body_entered(body: Node2D) -> void:
 		body.set_global_position(Vector2(-10,-10))
 		body.active = false
 		body.direction = null
-		hp -= 25
+		hp -= body.power
 		
 		# if die, delete self
 		if hp <= 0:
