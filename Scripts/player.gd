@@ -21,7 +21,7 @@ var enter_from = "Left" # the direction the player will enter the room
 var enter_coords = {"Left": Vector2(182.9998, 391.9999), "Top": Vector2(613.0012, 221.9999), "Right": Vector2(1097.999, 408.9995), "Bottom": Vector2(614.9999, 559.9992)} # the location the player will walk to from the entrance
 var target_position = null # the location the player will walk to
 var children_to_transfer = [] # the children to transfer to the next scene
-var max_stages = 1
+var max_stages = 3
 var stages_complete = 0
 
 func _ready() -> void:
