@@ -2095,6 +2095,7 @@ script = ExtResource("2_6e6db")
 
 [node name="PauseMenu" parent="." instance=ExtResource("7_bxa4p")]
 visible = false
+z_index = 2
 offset_left = 59.1958
 offset_top = 39.0765
 offset_right = 59.1958
