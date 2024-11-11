@@ -20,6 +20,8 @@ var room_node = null
 var target_position = null
 var room_number = 0
 
+@onready var win_menu = $"../YouWin"
+
 # Flag to check if scene is loaded
 var scene_loading_done = false
 var children_to_transfer = []
@@ -118,6 +120,39 @@ func _physics_process(_delta: float) -> void:
 							print("Error: 'Room' node not found in the new scene")
 					else:
 						print("Error: Could not load next scene.")
+				elif room_number == 1:
+					var next_scene_path = "res://Scenes/room3.tscn"
+					var next_scene_resource = load(next_scene_path)
+					
+					room_number = 2
+					
+					if next_scene_resource:
+						#Instance the new scene
+						var next_scene_instance = next_scene_resource.instantiate()
+						var next_room_node = next_scene_instance.get_node(".") #Room node
+						
+						# set room beginning so next scene starts at beginning
+						room_node.begin = 0
+						# transfer all children to new scene
+						if next_room_node:
+							# get root for basis
+							var the_root = get_tree().root
+							# get the children we want to transfer
+							children_to_transfer = room_node.get_children()
+							var counter = 0
+							for child in children_to_transfer:
+								room_node.remove_child(child)
+								next_room_node.add_child(child)
+								
+							next_room_node.num_enemy = 1
+							
+							the_root.add_child(next_room_node)
+							the_root.remove_child(room_node)
+							return
+						else:
+							print("Error: 'Room' node not found in the new scene")
+					else:
+						print("Error: Could not load next scene.")
 				else:
 					var next_scene_path = "res://Scenes/room3.tscn"
 					var next_scene_resource = load(next_scene_path)
@@ -135,18 +170,18 @@ func _physics_process(_delta: float) -> void:
 							var the_root = get_tree().root
 							# get the children we want to transfer
 							children_to_transfer = room_node.get_children()
-							# transfer each child
+							var counter = 0
 							for child in children_to_transfer:
 								room_node.remove_child(child)
-								next_room_node.add_child(child)
-							the_root.add_child(next_room_node)
-							the_root.remove_child(room_node)
+						
+							Engine.time_scale = 0
+							
 							return
 						else:
 							print("Error: 'Room' node not found in the new scene")
 					else:
 						print("Error: Could not load next scene.")
-				
+					
 				
 
 func set_enter_from(entry) -> void:

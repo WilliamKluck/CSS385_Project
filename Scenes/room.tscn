@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://4rn0xkuqdlh6" path="res://Scenes/Enemy.tscn" id="3_p5vpr"]
 [ext_resource type="PackedScene" uid="uid://reggauq4vlhj" path="res://Scenes/hud.tscn" id="5_ev4xr"]
 [ext_resource type="Script" path="res://Scripts/room_blockers.gd" id="6_tnhp5"]
-[ext_resource type="PackedScene" path="res://Scenes/light.tscn" id="7_35tbl"]
+[ext_resource type="PackedScene" uid="uid://hu0ic4wwc08o" path="res://Scenes/light.tscn" id="7_35tbl"]
 [ext_resource type="PackedScene" uid="uid://dfdx4igkf07qq" path="res://UI/pause_menu.tscn" id="7_bxa4p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_40et1"]
