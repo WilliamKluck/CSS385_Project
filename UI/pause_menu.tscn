@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfdx4igkf07qq"]
+
+[ext_resource type="Script" path="res://Scripts/pause_menu.gd" id="1_tatw3"]
+[ext_resource type="Shader" path="res://UI/pause_menu.gdshader" id="2_4v2va"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pujlr"]
+shader = ExtResource("2_4v2va")
+shader_parameter/amount = 1.0
+
+[node name="PauseMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tatw3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_pujlr")
+layout_mode = 0
+offset_left = -1462.0
+offset_top = -995.0
+offset_right = -1386.0
+offset_bottom = -915.0
+scale = Vector2(37.5617, 22.6847)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Resume"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Quit"
+
+[node name="Instructions" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "WASD/joystick to move
+Spacebar/X to attack
+Shoot enemies and avoid getting hit!"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
