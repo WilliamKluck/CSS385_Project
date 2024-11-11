@@ -10,10 +10,9 @@ func _ready():
 	room_node = get_node("..")
 	
 func _physics_process(_delta: float) -> void:
-	if room_node.begin:
-		movement()
-		check_position()
-		move_and_slide()
+	movement()
+	check_position()
+	move_and_slide()
 
 func movement() -> void:
 	if direction:
