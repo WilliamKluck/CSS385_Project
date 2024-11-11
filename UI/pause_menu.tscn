@@ -52,9 +52,9 @@ text = "Quit"
 [node name="Instructions" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "WASD to move
-Spacebar to attack
-Fight enemies to avoid getting hit!"
+text = "WASD/joystick to move
+Spacebar/X to attack
+Shoot enemies and avoid getting hit!"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
