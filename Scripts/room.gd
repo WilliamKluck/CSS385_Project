@@ -3,6 +3,11 @@ extends TileMap
 var begin = null
 var enemies = []
 var rng = RandomNumberGenerator.new()
+
+# pause menu additions
+@onready var pause_menu = $PauseMenu
+var paused = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	enemies = get_node("./Enemies").get_children()
@@ -15,4 +20,17 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
+	# pause menu additions
+	if Input.is_action_just_pressed("pause"):
+		pauseMenu()
+	
+# pause menu additions
+func pauseMenu():
+	if paused:
+		pause_menu.hide()
+		Engine.time_scale = 1
+	else:
+		pause_menu.show()
+		Engine.time_scale = 0
+		
+	paused = !paused
