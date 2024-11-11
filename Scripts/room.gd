@@ -1,14 +1,17 @@
 extends TileMap
 
 var begin = 0 # 0 is before, 1 is during, 2 is after
-var num_enemy = 3 # to allow changing in other scenes
+var num_enemy = 1 # to allow changing in other scenes
+var max_enemy = 11 # equal the number of enemy positions
 var enemies = [] # to store enemies and allow creation
 var rng = RandomNumberGenerator.new() # to select enemy placement
 var initialized = null # decides if we need more enemies
 
 # pause menu additions
-@onready var pause_menu = $PauseMenu
+@onready var pause_menu = $UI/PauseMenu
+@onready var death_menu = $UI/DeathMenu
 var paused = false
+var dead = false
 
 func _ready() -> void:
 	initialized = false
@@ -16,7 +19,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	# If not initialized, set name to Room, spawn enemies
 	if not initialized:
+		# increase the amount of enemies
+		num_enemy += 1
+		
 		name = "Room"
 		initialized = true
 		var enemy_holder = get_node("./Enemies")
@@ -51,3 +58,9 @@ func pauseMenu():
 		Engine.time_scale = 0
 		
 	paused = !paused
+
+func deathMenu():
+	if not dead:
+		dead = true
+		death_menu.show()
+		Engine.time_scale = 0

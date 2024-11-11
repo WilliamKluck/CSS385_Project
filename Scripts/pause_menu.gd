@@ -1,6 +1,6 @@
 extends Control
 
-@onready var room = $"../"
+@onready var room = $"../.."
 
 func _on_resume_pressed() -> void:
 	room.pauseMenu()
