@@ -24,6 +24,8 @@ var children_to_transfer = [] # the children to transfer to the next scene
 var max_stages = 3
 var stages_complete = 0
 
+const entry_map = {"Left": "Right", "Right": "Left", "Top": "Bottom", "Bottom": "Top"}
+
 func _ready() -> void:
 	# get room node for controlling scene stage and changing scene
 	room_node = get_node("..")
@@ -66,6 +68,8 @@ func _physics_process(_delta: float) -> void:
 		# move to allow player to choose exit
 		handleInput()
 		move_and_slide()
+		
+		var near_entry_node = null
 		# check exits
 		for entry_node in entry_nodes:
 			# measure distance from exits
@@ -73,61 +77,45 @@ func _physics_process(_delta: float) -> void:
 			
 			# if close, set next stage entry point, and load next scene
 			if distance_from.length() < 20:
-				print(entry_node.name)
-				if entry_node.name == "Right":
-					enter_from = "Left"
-				elif entry_node.name == "Left":
-					enter_from = "Right"
-				elif entry_node.name == "Top":
-					enter_from = "Bottom"
-				else:
-					enter_from = "Top"
-				# get node for entry
-				var enter_node = get_node("../RoomEntryPoints/" + enter_from)
-				set_global_position(enter_node.get_global_position())
-				
-				# create new scene
-				var next_scene_path = "res://Scenes/room2.tscn"
-				var next_scene_resource = load(next_scene_path)
-				
-				# Check if successfully loaded
-				if next_scene_resource:
-					#Instance the new scene
-					var next_scene_instance = next_scene_resource.instantiate()
-					var next_room_node = next_scene_instance.get_node(".") #Room node
-					
-					# set room beginning so next scene starts at beginning
-					room_node.begin = 0
-					stages_complete += 1
-					if stages_complete == max_stages:
-						var end_scene_path = "res://Scenes/end.tscn"
-						var base = get_tree().root
-						for child in base.get_children():
-							base.remove_child(child)
-							child.queue_free()
-						# Load the new scene and instance it
-						var new_scene = load(end_scene_path).instantiate()
-						# Add the new scene to the root node
-						base.add_child(new_scene)
-						return
-						
-					# transfer all children to new scene
-					if next_room_node:
-						# get root for basis
-						var the_root = get_tree().root
-						# get the children we want to transfer
-						children_to_transfer = room_node.get_children()
-						# transfer each child
-						for child in children_to_transfer:
-							room_node.remove_child(child)
-							next_room_node.add_child(child)
-						the_root.add_child(next_room_node)
-						the_root.remove_child(room_node)
-						return
-					else:
-						print("Error: 'Room' node not found in the new scene")
-				else:
-					print("Error: Could not load next scene.")
+				near_entry_node = entry_node
+				break
+		
+		if not near_entry_node:
+			return
+			
+		print(near_entry_node.name)
+		enter_from = entry_map[near_entry_node.name]
+		# get node for entry
+		var enter_node = get_node("../RoomEntryPoints/" + enter_from)
+		set_global_position(enter_node.get_global_position())
+		
+		var next_scene_num = stages_complete + 2
+		
+		# create new scene
+		var next_scene_path = "res://Scenes/room" + str(next_scene_num) + ".tscn"
+		var next_scene_resource = load(next_scene_path)
+		
+		if not next_scene_resource:
+			print("Error: Could not load next scene.")
+			loadEndScene()
+			return
+		
+		#Instance the new scene
+		var next_scene_instance = next_scene_resource.instantiate()
+		var next_room_node = next_scene_instance.get_node(".") #Room node
+		
+		# set room beginning so next scene starts at beginning
+		room_node.begin = 0
+		stages_complete += 1
+		if stages_complete == max_stages:
+			loadEndScene()
+			return
+			
+		# transfer all children to new scene
+		if next_room_node:
+			transferChildren(next_room_node)
+		else:
+			print("Error: 'Room' node not found in the new scene")
 
 func set_enter_from(entry) -> void:
 	enter_from = entry
@@ -179,3 +167,26 @@ func doDamage() -> void:
 
 		if hp <= 0:
 			room_node.deathMenu()
+
+func loadEndScene() -> void:
+	var end_scene_path = "res://Scenes/end.tscn"
+	var base = get_tree().root
+	for child in base.get_children():
+		base.remove_child(child)
+		child.queue_free()
+	# Load the new scene and instance it
+	var new_scene = load(end_scene_path).instantiate()
+	# Add the new scene to the root node
+	base.add_child(new_scene)
+
+func transferChildren(next_room_node) -> void:
+	# get root for basis
+	var the_root = get_tree().root
+	# get the children we want to transfer
+	children_to_transfer = room_node.get_children()
+	# transfer each child
+	for child in children_to_transfer:
+		room_node.remove_child(child)
+		next_room_node.add_child(child)
+	the_root.add_child(next_room_node)
+	the_root.remove_child(room_node)
