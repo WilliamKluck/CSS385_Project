@@ -9,6 +9,9 @@ var room_node = null
 var player_node = null
 var frame: int = -1
 
+@onready var raycast = $RayCast2D
+var last_player_seen_loc = null
+
 func _ready():
 	pass
 
@@ -21,14 +24,30 @@ func _physics_process(_delta: float) -> void:
   
 	# if scene begins, begin movement
 	if room_node.begin == 1:
+		check_player_in_view()
 		move()
 		jitter((frame / jitter_duration) % 2)
 		move_and_slide()
+		
+func check_player_in_view():
+	var to_player = get_node("../../Player/Middle").get_global_position() - get_global_position()
+	raycast.target_position = to_player
+	#print(raycast.target_position)
+	raycast.force_raycast_update()
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		#print(collider, frame)
+		if collider == player_node:
+			last_player_seen_loc = get_node("../../Player/Middle").get_global_position()
 
 func move() -> void:
-	# move towards player
-	var direction = (player_node.get_global_position() - get_global_position()).normalized()
-	velocity = direction * SPEED
+	# move towards last player seen loc
+	if last_player_seen_loc:
+		var direction = (last_player_seen_loc - get_global_position()).normalized()
+		if (last_player_seen_loc - get_global_position()).length() < 10:
+			velocity = Vector2.ZERO
+		else:
+			velocity = direction * SPEED
 	
 func jitter(flag):
 	#print(jitter_angle if flag else -jitter_angle)

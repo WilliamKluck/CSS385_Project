@@ -2160,10 +2160,6 @@ scale = Vector2(2.9394, 2.20081)
 position = Vector2(373, 436)
 scale = Vector2(2.9394, 2.20081)
 
-[node name="EnemyPos6" type="Node2D" parent="EnemyPositions"]
-position = Vector2(630, 436)
-scale = Vector2(2.9394, 2.20081)
-
 [node name="EnemyPos7" type="Node2D" parent="EnemyPositions"]
 position = Vector2(877, 436)
 scale = Vector2(2.9394, 2.20081)
