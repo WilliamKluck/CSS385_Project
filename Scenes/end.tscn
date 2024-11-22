@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://chn6f3coifuua" path="res://Assets/AdventureBegins_DemoVersion/AdventureBegins_Demo.png" id="1_ni8ab"]
 [ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/mainlevbuild.png" id="2_5ignh"]
-[ext_resource type="Script" path="res://end.gd" id="3_3yva6"]
+[ext_resource type="Script" path="res://Scripts/end.gd" id="3_3yva6"]
 [ext_resource type="PackedScene" uid="uid://c4jjwpwgl261n" path="res://Scenes/Player.tscn" id="4_87dsd"]
 [ext_resource type="Script" path="res://Scenes/end_player.gd" id="5_v2dj4"]
 [ext_resource type="PackedScene" uid="uid://c5kc65ci8kw7t" path="res://Scenes/death_menu.tscn" id="6_7ybuw"]
