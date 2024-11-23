@@ -10,6 +10,10 @@ var hp = 4
 @onready var player_node = get_node("../../Player")
 var frame: int = -1
 
+@onready var raycast = $RayCast2D
+var last_player_seen_loc = null
+var direction = null
+
 func _ready():
 	pass
 
@@ -18,14 +22,39 @@ func _physics_process(_delta: float) -> void:
   
 	# if scene begins, begin movement
 	if room_node.begin == 1:
+		check_player_in_view()
 		move()
 		jitter((frame / jitter_duration) % 2)
 		move_and_slide()
+		
+func check_player_in_view():
+	var to_player = get_node("../../Player/Middle").get_global_position() - get_global_position()
+	raycast.target_position = to_player
+	#print(raycast.target_position)
+	raycast.force_raycast_update()
+	if raycast.is_colliding():
+		var collider = raycast.get_collider()
+		#print(collider, frame)
+		if collider == player_node:
+			last_player_seen_loc = get_node("../../Player/Middle").get_global_position()
 
 func move() -> void:
-	# move towards player
-	var direction = (player_node.get_global_position() - get_global_position()).normalized()
-	velocity = direction * SPEED
+	# move towards last player seen loc
+	if last_player_seen_loc:
+		direction = (last_player_seen_loc - get_global_position()).normalized()
+		if (last_player_seen_loc - get_global_position()).length() < 10:
+			last_player_seen_loc = null
+		else:
+			velocity = direction * SPEED
+	else:
+		# "patrol"?
+		if direction:
+			if is_on_wall():
+				direction.x = -direction.x
+			if is_on_floor() or is_on_ceiling():
+				direction.y = -direction.y
+			velocity = direction * SPEED
+
 	
 	if velocity.x > 0:
 		sprite.flip_h = false
@@ -35,7 +64,8 @@ func move() -> void:
 	
 func jitter(flag):
 	#print(jitter_angle if flag else -jitter_angle)
-	velocity = velocity.rotated(deg_to_rad(jitter_angle if flag else -jitter_angle))
+	if last_player_seen_loc:
+		velocity = velocity.rotated(deg_to_rad(jitter_angle if flag else -jitter_angle))
 	#print(name)
 	
 func _on_projectile_detector_body_entered(body: Node2D) -> void:

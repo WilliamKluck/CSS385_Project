@@ -219,6 +219,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		damage_animation_lock = false # Unlock after damage animation
 	if anim_name == "shoot":
 		shoot_projectile()
+		play_shoot_sound_effect()
 	if anim_name == "die":
 		room_node.deathMenu()
 		return
@@ -279,6 +280,14 @@ func shoot_projectile() -> void:
 		
 		# Apply the angle to the projectile's rotation
 		found_available_projectile.rotation = angle  # Apply this angle in radians
+		
+# Play shoot sound effect
+func play_shoot_sound_effect():
+	# duplicate to enable playing sound effects in parallel
+	var newPlayer = $SoundEffects/Shoot.duplicate()
+	newPlayer.name = "Shoot" + str(Time.get_ticks_msec())
+	$SoundEffects.add_child(newPlayer)
+	newPlayer.play()
 
 # Apply damage to the player based on damage counters and delay
 func doDamage() -> void:
