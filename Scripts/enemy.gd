@@ -5,8 +5,9 @@ const jitter_duration = 5	# frames
 var SPEED = 100.0
 var power = 1
 var hp = 4
-var room_node = null
-var player_node = null
+@onready var sprite = $AnimatedSprite2D
+@onready var room_node = get_node("../..")
+@onready var player_node = get_node("../../Player")
 var frame: int = -1
 
 @onready var raycast = $RayCast2D
@@ -17,10 +18,6 @@ func _ready():
 	pass
 
 func _physics_process(_delta: float) -> void:
-	# get room node for checking scene beginning
-	room_node = get_node("../..")
-	# get player nodef for checking player position
-	player_node = get_node("../../Player")
 	frame += 1
   
 	# if scene begins, begin movement
@@ -59,6 +56,12 @@ func move() -> void:
 			velocity = direction * SPEED
 
 	
+	if velocity.x > 0:
+		sprite.flip_h = false
+	elif velocity.x < 0:
+		sprite.flip_h = true
+		
+	
 func jitter(flag):
 	#print(jitter_angle if flag else -jitter_angle)
 	if last_player_seen_loc:
@@ -68,7 +71,7 @@ func jitter(flag):
 func _on_projectile_detector_body_entered(body: Node2D) -> void:
 	# if hit move projectile off screen, stop it and lose health
 	if body.to_string().begins_with("Projectile"):
-		body.set_global_position(Vector2(-10,-10))
+		body.set_global_position(Vector2(-100,-100))
 		body.active = false
 		body.direction = null
 		hp -= body.power

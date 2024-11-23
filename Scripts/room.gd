@@ -1,66 +1,112 @@
 extends TileMap
 
-var begin = 0 # 0 is before, 1 is during, 2 is after
-var num_enemy = 1 # to allow changing in other scenes
-var max_enemy = 11 # equal the number of enemy positions
-var enemies = [] # to store enemies and allow creation
-var rng = RandomNumberGenerator.new() # to select enemy placement
-var initialized = null # decides if we need more enemies
+# Constants
+const ENEMY_SCALE = Vector2(2, 2)
+const ROOM_NAME = "Room"
 
-# pause menu additions
+# Variables
+var begin = 0 # 0 is before, 1 is during, 2 is after
+var current_enemy_count = 2
+var max_enemy_positions = 11
+var enemies = []
+var rng = RandomNumberGenerator.new()
+@onready var initialized = false
+
+# Pause and death menu
 @onready var pause_menu = $UI/PauseMenu
 @onready var death_menu = $UI/DeathMenu
 var paused = false
 var dead = false
 
 func _ready() -> void:
-	initialized = false
+	pass
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	# If not initialized, set name to Room, spawn enemies
 	if not initialized:
-		# increase the amount of enemies
-		num_enemy += 1
-		
-		name = "Room"
-		initialized = true
-		var enemy_holder = get_node("./Enemies")
-		if enemy_holder:
-			var num_children = enemy_holder.get_child_count()
-			if num_children >= num_enemy:
-				enemies = enemy_holder.get_children()
-			else:
-				for i in range(num_enemy - num_children):
-					var enemy_scene = load("res://Scenes/Enemy.tscn")
-					var new_enemy = enemy_scene.instantiate()
-					new_enemy.name = "Enemy" + str(num_children + i + 1)
-					enemy_holder.add_child(new_enemy)
-				enemies = enemy_holder.get_children()
-			for enemy in enemies:
-				#enemy.set_process(true)
-				var locations = get_node("./EnemyPositions").get_children()
-				var location_selection = rng.randf_range(0,len(locations))
-				enemy.set_global_position(locations[location_selection].get_global_position())
-				locations.erase(locations[location_selection])
-	# pause menu additions
-	if Input.is_action_just_pressed("pause"):
-		pauseMenu()
-	
-# pause menu additions
-func pauseMenu():
-	if paused:
-		pause_menu.hide()
-		Engine.time_scale = 1
-	else:
-		pause_menu.show()
-		Engine.time_scale = 0
-		
-	paused = !paused
+		setup_enemies()
+	handle_pause_input()
 
-func deathMenu():
+# -------------------------------- Helper Functions --------------------------------
+# Setup enemies if not already done
+func setup_enemies() -> void:
+	name = ROOM_NAME
+	initialized = true
+
+	var enemy_holder = safe_get_node("./Enemies")
+	if not enemy_holder: return
+
+	var available_positions = get_enemy_positions()
+	if available_positions.size() == 0:
+		print("Error: No enemy positions available!")
+		return
+
+	manage_enemy_creation(enemy_holder)
+	place_enemies(enemy_holder, available_positions)
+	current_enemy_count += 2
+
+# Retrieve enemy positions from the scene
+func get_enemy_positions() -> Array:
+	var positions = safe_get_node("./EnemyPositions").get_children()
+	if not positions:
+		print("Warning: Enemy positions not found!")
+	return positions
+
+# Handle enemy creation based on the required number
+func manage_enemy_creation(enemy_holder: Node) -> void:
+	var num_children = enemy_holder.get_child_count()
+
+	if num_children < current_enemy_count:
+		for i in range(current_enemy_count - num_children):
+			create_new_enemy(enemy_holder, i + num_children + 1)
+
+	enemies = enemy_holder.get_children()
+
+# Create and add a new enemy to the enemy holder
+func create_new_enemy(enemy_holder: Node, enemy_id: int) -> void:
+	var enemy_scene = load("res://Scenes/Enemy.tscn")
+	if not enemy_scene:
+		print("Error: Enemy scene not found!")
+		return
+
+	var new_enemy = enemy_scene.instantiate()
+	new_enemy.name = "Enemy" + str(enemy_id)
+	new_enemy.scale = ENEMY_SCALE
+	enemy_holder.add_child(new_enemy)
+
+# Place all enemies at random valid positions
+func place_enemies(enemy_holder: Node, locations: Array) -> bool:
+	for enemy in enemy_holder.get_children():
+		if locations.size() == 0:
+			print("Warning: Not enough positions for all enemies!")
+			return false
+
+		var location_selection = rng.randi_range(0, len(locations) - 1)
+		enemy.set_global_position(locations[location_selection].get_global_position())
+		locations.remove_at(location_selection)
+
+	return true
+
+# Handle pause input and toggle pause menu
+func handle_pause_input() -> void:
+	if Input.is_action_just_pressed("pause"):
+		toggle_pause_menu()
+
+# Toggle pause menu visibility and game state
+func toggle_pause_menu() -> void:
+	paused = !paused
+	pause_menu.visible = paused
+	Engine.time_scale = 0 if paused else 1
+
+# Show death menu and stop the game
+func deathMenu() -> void:
 	if not dead:
 		dead = true
 		death_menu.show()
 		Engine.time_scale = 0
+
+# Retrieve a child node safely
+func safe_get_node(path: String) -> Node:
+	var node = get_node(path)
+	if not node:
+		print("Error: Node at path '" + path + "' not found!")
+	return node

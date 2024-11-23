@@ -4,12 +4,18 @@ extends CharacterBody2D
 @onready var hud_hp_label = get_node("../UI/HUD/HPLabel") # Health display
 @onready var room_entry_points = get_node("../RoomEntryPoints")
 @onready var room_node = get_node("..")
+@onready var sprite = $Sprite2D
+@onready var animation_player = $AnimationPlayer
 @onready var projectile_scene = preload("res://Scenes/projectile.tscn") # Reusable projectile template
 
 # Movement Variables
 const SPEED = 300.0
 var character_facing = Vector2(1, 0) # Direction player faces
 var target_position = null # Position the player moves toward in auto-walk
+
+# Animation Variables
+var current_animation = "" # Track the current animation
+var damage_animation_lock = false
 
 # Health Variables
 var hp = 10
@@ -49,6 +55,8 @@ func _ready() -> void:
 	update_health_ui() # Show initial health
 
 func _physics_process(_delta: float) -> void:
+	if room_node.paused:
+		return
 	# Control logic depending on stage state
 	if room_node.begin == 1: # Ongoing stage
 		process_stage_in_progress()
@@ -57,11 +65,12 @@ func _physics_process(_delta: float) -> void:
 	else: # Stage Complete
 		process_stage_over()
 
-# --- Initialization Helpers ---
+# ------------------------------------------ Initialization Helpers --------------------------------
 # Setup the room environment and entry points
 func initialize_room() -> void:
 	room_node = get_node("..")
 	entry_nodes = room_entry_points.get_children()
+	create_shoot_animation()
 
 # Place player at the correct entry node based on their direction of entry
 func initialize_player_position() -> void:
@@ -74,9 +83,9 @@ func initialize_player_position() -> void:
 # Update health bar with current HP
 func update_health_ui() -> void:
 	hud_hp_label.set_text(heart.repeat(hp))
-# --- End Initialization Helpers ---
+# ------------------------------------------ End Initialization Helpers ----------------------------
 
-# --- Stage Processing ---
+# ------------------------------------------ Stage Processing --------------------------------------
 # Manage player and stage state during gameplay
 func process_stage_in_progress() -> void:
 	if not is_instance_valid(room_node): return
@@ -137,7 +146,9 @@ func handle_entry_node(entry_node: Node2D) -> void:
 	if not next_room_node: # Ensure the new room has a valid root node
 		print("Error: 'Room' node not found in the new scene")
 		return
-
+		
+	
+	next_room_node.current_enemy_count = room_node.current_enemy_count # Transfer enemy count
 	room_node.begin = 0 # Reset the room's state
 	stages_complete += 1 # Track stage progression
 	
@@ -146,10 +157,9 @@ func handle_entry_node(entry_node: Node2D) -> void:
 		return
 	
 	transferChildren(next_room_node) # Transfer room contents to the new scene
-	
-# --- End Stage Process Helpers ---
+# ------------------------------------------ End Stage Process Helpers -----------------------------
 
-# --- Projectile and Movement Helpers ---
+# ------------------------------------------ Projectile and Movement Helpers -----------------------
 # Create a pool of reusable projectiles for the player
 func create_projectiles() -> void:
 	if projectiles_created:
@@ -172,13 +182,69 @@ func reset_projectiles() -> void:
 
 # Move the character based on input and update facing direction
 func move(moveDirection) -> void:
-	# save last known facing direction
+	# Save last known facing direction
 	if moveDirection != Vector2(0,0):
 		character_facing = moveDirection
 	velocity = moveDirection * SPEED
-# --- End Projectile and Movement Helpers ---
+	
+	# Update animation based on movement
+	if moveDirection.x > 0:
+		sprite.flip_h = false
+		set_animation("walkHorizontal")
+	elif moveDirection.x < 0:
+		sprite.flip_h = true
+		set_animation("walkHorizontal")
+	elif moveDirection.y < 0:
+		set_animation("walkUp")
+	elif moveDirection.y > 0:
+		set_animation("walkHorizontal")
+	else:
+		set_animation("idle") # Default to idle when not moving
+# ------------------------------------------ End Projectile and Movement Helpers -------------------
 
-# --- Damage and Input Helpers ---
+# ------------------------------------------ Animation Helpers -------------------------------------
+func set_animation(new_animation: String) -> void:
+	if damage_animation_lock and (new_animation != "die" or new_animation != "takeDamage"):
+		return # Block other animations except "die" while locked
+	if current_animation == "die":
+		return # No animation changes after death
+	if current_animation == new_animation:
+		return # Avoid restarting the same animation
+	
+	current_animation = new_animation
+	animation_player.play(new_animation)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "takeDamage" or anim_name == "shoot":
+		damage_animation_lock = false # Unlock after damage animation
+	if anim_name == "shoot":
+		shoot_projectile()
+		play_shoot_sound_effect()
+	if anim_name == "die":
+		room_node.deathMenu()
+		return
+
+func create_shoot_animation() -> void:
+	var animation = animation_player.get_animation("shoot")
+	if not animation:
+		animation = Animation.new()
+		animation_player.add_animation("shoot", animation)
+
+	# Reset the animation and set the correct length
+	animation.length = shot_delay / 1000.0  # Duration of the shot animation in seconds
+	animation.length -= 0.1
+	
+	# Create a property track for the 'frame' property of the Sprite
+	var track_index = animation.add_track(Animation.TYPE_VALUE)
+	animation.track_set_path(track_index, String(sprite.get_path()) + ":frame")  # Target the 'frame' property of the Sprite
+	
+	# Set keyframes for the Sprite's `frame` property (this assumes your sprite has a `frame` property)
+	# Start from frame 120 and end at frame 123 (or however you want the animation to span)
+	animation.track_insert_key(0, 0.0, 120)  # Keyframe at time 0 (start) for frame 120
+	animation.track_insert_key(0, animation.length, 123)  # Keyframe at the end time for frame 123
+#------------------------------------------ End Animation Helpers ---------------------------------
+
+# ------------------------------------------ Damage and Input Helpers ------------------------------
 # Process player input for movement and actions
 func handleInput() -> void:
 	var moveDirection = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -192,8 +258,8 @@ func check_and_shoot() -> void:
 	if last_shot_tick and Time.get_ticks_msec() - last_shot_tick < shot_delay:
 		return
 	
-	shoot_projectile()
-	play_shoot_sound_effect()
+	set_animation("shoot")
+	damage_animation_lock = true
 	last_shot_tick = Time.get_ticks_msec()
 
 # Activate an available projectile and launch it in the player's facing direction
@@ -208,6 +274,12 @@ func shoot_projectile() -> void:
 		found_available_projectile.set_global_position(get_global_position())
 		found_available_projectile.active = true
 		found_available_projectile.direction = character_facing
+
+		# Calculate the rotation angle based on the player's facing direction
+		var angle = character_facing.angle()  # Get the angle of the facing direction (in radians)
+		
+		# Apply the angle to the projectile's rotation
+		found_available_projectile.rotation = angle  # Apply this angle in radians
 		
 # Play shoot sound effect
 func play_shoot_sound_effect():
@@ -227,12 +299,18 @@ func doDamage() -> void:
 	hp = max(hp - damage_counter, 0)
 	hud_hp_label.set_text(heart.repeat(hp))
 	last_hit_tick = Time.get_ticks_msec()
-
+	
+	set_animation("takeDamage") # Play damage animation
+	damage_animation_lock = true
+	
 	if hp <= 0:
-		room_node.deathMenu()
-# --- End Damage and Input Helpers ---
+		handle_death()
 
-# --- Scene Loading Helpers ---
+func handle_death() -> void:
+	set_animation("die")
+# ------------------------------------------ End Damage and Input Helpers --------------------------
+
+# ------------------------------------------ Scene Loading Helpers ---------------------------------
 # Load the final end scene when the game is complete
 func loadEndScene() -> void:
 	var end_scene_path = "res://Scenes/end.tscn"
@@ -271,7 +349,7 @@ func transferChildren(next_room_node) -> void:
 	room_node = next_room_node
 # End Scene Loading Helpers
 
-# --- Collision Detection Helpers ---
+# ------------------------------------------ Collision Detection Helpers ---------------------------
 # Increase damage counter when entering an enemy's detection area
 func _on_enemy_detector_body_entered(body: Node2D) -> void:
 	if not is_instance_valid(body):
@@ -285,4 +363,4 @@ func _on_enemy_detector_body_exited(body: Node2D) -> void:
 		return
 	#if hasattr(body, "power"):
 	damage_counter -= body.power
-# --- End Collision Detection Helpers ---
+# ------------------------------------------ End Collision Detection Helpers -----------------------

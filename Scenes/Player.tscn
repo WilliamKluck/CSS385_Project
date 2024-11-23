@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c4jjwpwgl261n"]
+[gd_scene load_steps=16 format=3 uid="uid://c4jjwpwgl261n"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ya5b3"]
 [ext_resource type="AudioStream" uid="uid://7p0dsge5utn3" path="res://Assets/pew-pew-lame-sound-effect.mp3" id="2_odyj3"]
@@ -9,7 +9,7 @@
 size = Vector2(13, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8sxym"]
-size = Vector2(13, 24)
+size = Vector2(19, 28)
 
 [sub_resource type="Animation" id="Animation_6v7j5"]
 length = 0.001
@@ -77,7 +77,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_g8c6j"]
 resource_name = "takeDamage"
-length = 0.5
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -85,11 +85,46 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [182, 183, 184]
+}
+
+[sub_resource type="Animation" id="Animation_klg4u"]
+resource_name = "walkHorizontal"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [78, 81]
+"values": [13, 20]
 }
+
+[sub_resource type="Animation" id="Animation_kyltu"]
+resource_name = "walkUp"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [143, 150]
+}
+
+[sub_resource type="Animation" id="Animation_ke0qr"]
+resource_name = "shoot"
 
 [sub_resource type="Animation" id="Animation_klg4u"]
 resource_name = "walkHorizontal"
@@ -129,6 +164,7 @@ _data = {
 "die": SubResource("Animation_sdcwe"),
 "idle": SubResource("Animation_tps5i"),
 "powerup": SubResource("Animation_usab2"),
+"shoot": SubResource("Animation_ke0qr"),
 "takeDamage": SubResource("Animation_g8c6j"),
 "walkHorizontal": SubResource("Animation_klg4u"),
 "walkUp": SubResource("Animation_kyltu")
@@ -140,24 +176,22 @@ collision_mask = 3
 script = ExtResource("1_ya5b3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(6, 6)
+position = Vector2(2.2, -5.8)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_p3p4n")
 hframes = 13
 vframes = 15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(3.5, 12)
+position = Vector2(-0.299999, 0.200001)
 shape = SubResource("RectangleShape2D_1jmba")
 
 [node name="EnemyDetector" type="Area2D" parent="."]
-position = Vector2(5, 9)
+position = Vector2(1.2, -2.8)
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
-visible = false
 position = Vector2(-1.5, 3)
 shape = SubResource("RectangleShape2D_8sxym")
 
@@ -179,3 +213,4 @@ autoplay = "idle"
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]
 [connection signal="body_exited" from="EnemyDetector" to="." method="_on_enemy_detector_body_exited"]
 [connection signal="finished" from="SoundEffects/Shoot" to="SoundEffects/Shoot" method="_on_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

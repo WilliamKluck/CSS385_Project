@@ -1,28 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://sntlsnqtd4wr"]
+[gd_scene load_steps=9 format=3 uid="uid://sntlsnqtd4wr"]
 
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_5be2h"]
+[ext_resource type="Texture2D" uid="uid://cb5t5ws8nejg8" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_1.png" id="2_n1361"]
+[ext_resource type="Texture2D" uid="uid://d0x2ugfnixdy" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_2.png" id="3_g73m2"]
+[ext_resource type="Texture2D" uid="uid://du8mbmojodyyp" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_3.png" id="4_ipp73"]
+[ext_resource type="Texture2D" uid="uid://he0r5nbwk6wb" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_4.png" id="5_or1n3"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_tfwmi"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ihhwe"]
+size = Vector2(29, 37)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ee32w"]
-radius = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21spq"]
+size = Vector2(29.8077, 39)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_cykxs"]
-radius = 32.0
+[sub_resource type="SpriteFrames" id="SpriteFrames_73cj6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n1361")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_g73m2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ipp73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_or1n3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_5be2h")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-position = Vector2(1.90735e-06, 0)
-scale = Vector2(43.5499, 42.5)
-mesh = SubResource("SphereMesh_tfwmi")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ee32w")
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_ihhwe")
 
 [node name="Projectile Detector" type="Area2D" parent="."]
 scale = Vector2(1.04, 1)
@@ -30,7 +46,14 @@ collision_layer = 2
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Projectile Detector"]
-shape = SubResource("CircleShape2D_cykxs")
+position = Vector2(-0.480769, -0.5)
+shape = SubResource("RectangleShape2D_21spq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_73cj6")
+autoplay = "default"
+frame_progress = 0.38138
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 collision_mask = 20
