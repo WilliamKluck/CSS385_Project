@@ -11,6 +11,7 @@ var frame: int = -1
 
 @onready var raycast = $RayCast2D
 var last_player_seen_loc = null
+var direction = null
 
 func _ready():
 	pass
@@ -43,15 +44,25 @@ func check_player_in_view():
 func move() -> void:
 	# move towards last player seen loc
 	if last_player_seen_loc:
-		var direction = (last_player_seen_loc - get_global_position()).normalized()
+		direction = (last_player_seen_loc - get_global_position()).normalized()
 		if (last_player_seen_loc - get_global_position()).length() < 10:
-			velocity = Vector2.ZERO
+			last_player_seen_loc = null
 		else:
 			velocity = direction * SPEED
+	else:
+		# "patrol"?
+		if direction:
+			if is_on_wall():
+				direction.x = -direction.x
+			if is_on_floor() or is_on_ceiling():
+				direction.y = -direction.y
+			velocity = direction * SPEED
+
 	
 func jitter(flag):
 	#print(jitter_angle if flag else -jitter_angle)
-	velocity = velocity.rotated(deg_to_rad(jitter_angle if flag else -jitter_angle))
+	if last_player_seen_loc:
+		velocity = velocity.rotated(deg_to_rad(jitter_angle if flag else -jitter_angle))
 	#print(name)
 	
 func _on_projectile_detector_body_entered(body: Node2D) -> void:
