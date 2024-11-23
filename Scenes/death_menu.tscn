@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c5kc65ci8kw7t"]
 
-[ext_resource type="Script" path="res://death_screen.gd" id="1_bv601"]
+[ext_resource type="Script" path="res://Scripts/death_screen.gd" id="1_bv601"]
 [ext_resource type="Shader" path="res://UI/pause_menu.gdshader" id="2_v5vtj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pujlr"]
@@ -58,6 +58,6 @@ You have died.
  get out of the dungeon."
 horizontal_alignment = 1
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
