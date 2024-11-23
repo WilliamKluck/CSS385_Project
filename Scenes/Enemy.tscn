@@ -55,4 +55,7 @@ sprite_frames = SubResource("SpriteFrames_73cj6")
 autoplay = "default"
 frame_progress = 0.38138
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 20
+
 [connection signal="body_entered" from="Projectile Detector" to="." method="_on_projectile_detector_body_entered"]
