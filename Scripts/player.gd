@@ -151,6 +151,12 @@ func handleInput() -> void:
 			found_available_projectile.set_global_position(get_global_position())
 			found_available_projectile.active = true
 			found_available_projectile.direction = character_facing
+			# duplicate to enable playing sound effects in parallel
+			var newPlayer = $SoundEffects/Shoot.duplicate()
+			newPlayer.name = "Shoot" + str(Time.get_ticks_msec())
+			$SoundEffects.add_child(newPlayer)
+			newPlayer.play()
+			#print($SoundEffects.get_child_count())
 		last_shot_tick = Time.get_ticks_msec()
 
 func _on_enemy_detector_body_entered(body: Node2D) -> void:

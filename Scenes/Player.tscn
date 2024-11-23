@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4jjwpwgl261n"]
+[gd_scene load_steps=7 format=3 uid="uid://c4jjwpwgl261n"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ya5b3"]
+[ext_resource type="AudioStream" uid="uid://7p0dsge5utn3" path="res://Assets/pew-pew-lame-sound-effect.mp3" id="2_odyj3"]
+[ext_resource type="Script" path="res://Scenes/shoot_sound_effect.gd" id="3_hijfj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_78rr7"]
 
@@ -38,5 +40,12 @@ shape = SubResource("RectangleShape2D_8sxym")
 [node name="Middle" type="Node2D" parent="."]
 position = Vector2(4.5, 11.49)
 
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="Shoot" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("2_odyj3")
+script = ExtResource("3_hijfj")
+
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]
 [connection signal="body_exited" from="EnemyDetector" to="." method="_on_enemy_detector_body_exited"]
+[connection signal="finished" from="SoundEffects/Shoot" to="SoundEffects/Shoot" method="_on_finished"]
