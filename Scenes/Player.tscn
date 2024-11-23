@@ -196,7 +196,6 @@ position = Vector2(-1.5, 3)
 shape = SubResource("RectangleShape2D_8sxym")
 
 [node name="Middle" type="Node2D" parent="."]
-position = Vector2(4.5, 11.49)
 
 [node name="SoundEffects" type="Node" parent="."]
 
