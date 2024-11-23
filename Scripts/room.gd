@@ -5,6 +5,7 @@ const ENEMY_SCALE = Vector2(2, 2)
 const ROOM_NAME = "Room"
 
 # Variables
+var enemy_difficulty = 1
 var begin = 0 # 0 is before, 1 is during, 2 is after
 var current_enemy_count = 2
 var max_enemy_positions = 11
@@ -29,6 +30,7 @@ func _process(_delta: float) -> void:
 # -------------------------------- Helper Functions --------------------------------
 # Setup enemies if not already done
 func setup_enemies() -> void:
+	print("Stage Difficulty ", enemy_difficulty)
 	name = ROOM_NAME
 	initialized = true
 
@@ -42,7 +44,11 @@ func setup_enemies() -> void:
 
 	manage_enemy_creation(enemy_holder)
 	place_enemies(enemy_holder, available_positions)
+	print("Amount of Enemies ", len(enemies))
+	print("Enemy HP ", enemies[0].hp)
+	print("Enemy Power ", enemies[0].power)
 	current_enemy_count += 2
+	enemy_difficulty += 2
 
 # Retrieve enemy positions from the scene
 func get_enemy_positions() -> Array:
@@ -65,13 +71,14 @@ func manage_enemy_creation(enemy_holder: Node) -> void:
 func create_new_enemy(enemy_holder: Node, enemy_id: int) -> void:
 	var enemy_scene = load("res://Scenes/Enemy.tscn")
 	if not enemy_scene:
-		print("Error: Enemy scene not found!")
 		return
 
 	var new_enemy = enemy_scene.instantiate()
 	new_enemy.name = "Enemy" + str(enemy_id)
 	new_enemy.scale = ENEMY_SCALE
 	enemy_holder.add_child(new_enemy)
+	new_enemy.hp *= enemy_difficulty
+	new_enemy.power *= enemy_difficulty
 
 # Place all enemies at random valid positions
 func place_enemies(enemy_holder: Node, locations: Array) -> bool:
@@ -93,16 +100,17 @@ func handle_pause_input() -> void:
 
 # Toggle pause menu visibility and game state
 func toggle_pause_menu() -> void:
-	paused = !paused
+	if dead:
+		return
+	paused = not paused
 	pause_menu.visible = paused
 	Engine.time_scale = 0 if paused else 1
 
 # Show death menu and stop the game
 func deathMenu() -> void:
-	if not dead:
-		dead = true
-		death_menu.show()
-		Engine.time_scale = 0
+	pause_menu.hide()
+	death_menu.show()
+	Engine.time_scale = 0
 
 # Retrieve a child node safely
 func safe_get_node(path: String) -> Node:

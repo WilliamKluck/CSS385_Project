@@ -75,6 +75,9 @@ tracks/0/keys = {
 "values": [130, 135]
 }
 
+[sub_resource type="Animation" id="Animation_ke0qr"]
+resource_name = "shoot"
+
 [sub_resource type="Animation" id="Animation_g8c6j"]
 resource_name = "takeDamage"
 length = 0.2
@@ -122,6 +125,7 @@ tracks/0/keys = {
 "update": 0,
 "values": [143, 150]
 }
+
 
 [sub_resource type="Animation" id="Animation_ke0qr"]
 resource_name = "shoot"

@@ -30,6 +30,7 @@ var projectiles = [] # List of reusable projectiles
 var projectiles_created = false # Ensure projectiles are instantiated once
 var last_shot_tick = null
 const shot_delay = 250 # Time between shots (ms)
+var projectile_power = 1
 
 # Room/Stage Variables
 const TARGET_THRESHOLD = 5.0
@@ -83,6 +84,7 @@ func initialize_player_position() -> void:
 # Update health bar with current HP
 func update_health_ui() -> void:
 	hud_hp_label.set_text(heart.repeat(hp))
+	print("Player Health ", hp)
 # ------------------------------------------ End Initialization Helpers ----------------------------
 
 # ------------------------------------------ Stage Processing --------------------------------------
@@ -149,6 +151,7 @@ func handle_entry_node(entry_node: Node2D) -> void:
 		
 	
 	next_room_node.current_enemy_count = room_node.current_enemy_count # Transfer enemy count
+	next_room_node.enemy_difficulty = room_node.enemy_difficulty
 	room_node.begin = 0 # Reset the room's state
 	stages_complete += 1 # Track stage progression
 	
@@ -170,6 +173,7 @@ func create_projectiles() -> void:
 		new_projectile.name = "Projectile" + str(i)
 		get_node("..").add_child(new_projectile)
 		projectiles.append(new_projectile)
+		new_projectile.power = projectile_power
 	projectiles_created = true
 
 # Free the pool of reusable projectiles
@@ -179,6 +183,13 @@ func reset_projectiles() -> void:
 			projectile.queue_free()
 	projectiles.clear()
 	projectiles_created = false
+
+func change_projectile_power(delta: int) -> void:
+	projectile_power += delta
+	for projectile in projectiles:
+		if is_instance_valid(projectile):
+			projectile.power = projectile_power
+	print("Projectile Power ", projectiles[0].power)
 
 # Move the character based on input and update facing direction
 func move(moveDirection) -> void:
@@ -204,7 +215,7 @@ func move(moveDirection) -> void:
 
 # ------------------------------------------ Animation Helpers -------------------------------------
 func set_animation(new_animation: String) -> void:
-	if damage_animation_lock and (new_animation != "die" or new_animation != "takeDamage"):
+	if damage_animation_lock and new_animation != "die":
 		return # Block other animations except "die" while locked
 	if current_animation == "die":
 		return # No animation changes after death
@@ -221,6 +232,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		shoot_projectile()
 		play_shoot_sound_effect()
 	if anim_name == "die":
+		room_node.dead = true
 		room_node.deathMenu()
 		return
 
@@ -336,6 +348,10 @@ func transferChildren(next_room_node) -> void:
 	# Transfer children
 	children_to_transfer = room_node.get_children()
 	for child in children_to_transfer:
+		if child.name == "Pit": 
+			continue
+		#if child.name.starts_with("Potion"):
+			#continue
 		room_node.remove_child(child)
 		next_room_node.add_child(child)
 	
@@ -347,7 +363,7 @@ func transferChildren(next_room_node) -> void:
 	room_node.queue_free()
 	
 	room_node = next_room_node
-# End Scene Loading Helpers
+# ------------------------------------------ End Scene Loading Helpers -----------------------------
 
 # ------------------------------------------ Collision Detection Helpers ---------------------------
 # Increase damage counter when entering an enemy's detection area
