@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://culwwhothebat"]
+[gd_scene load_steps=13 format=3 uid="uid://culwwhothebat"]
 
 [ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/mainlevbuild.png" id="1_glev2"]
 [ext_resource type="Script" path="res://Scripts/room.gd" id="2_6e6db"]
 [ext_resource type="PackedScene" uid="uid://c4jjwpwgl261n" path="res://Scenes/Player.tscn" id="2_7uw3i"]
-[ext_resource type="PackedScene" uid="uid://sntlsnqtd4wr" path="res://Scenes/Enemy.tscn" id="3_p5vpr"]
 [ext_resource type="PackedScene" uid="uid://reggauq4vlhj" path="res://Scenes/hud.tscn" id="5_ev4xr"]
 [ext_resource type="Script" path="res://Scripts/room_blockers.gd" id="6_tnhp5"]
 [ext_resource type="PackedScene" uid="uid://hu0ic4wwc08o" path="res://Scenes/light.tscn" id="7_35tbl"]
@@ -2125,18 +2124,6 @@ position = Vector2(616, 626)
 scale = Vector2(2.9394, 2.20081)
 
 [node name="Enemies" type="Node" parent="."]
-
-[node name="Enemy1" parent="Enemies" instance=ExtResource("3_p5vpr")]
-position = Vector2(877, 585)
-scale = Vector2(2.9394, 2.20081)
-
-[node name="Enemy2" parent="Enemies" instance=ExtResource("3_p5vpr")]
-position = Vector2(628, 436)
-scale = Vector2(2.9394, 2.20081)
-
-[node name="Enemy3" parent="Enemies" instance=ExtResource("3_p5vpr")]
-position = Vector2(1088, 585)
-scale = Vector2(2.9394, 2.20081)
 
 [node name="EnemyPositions" type="Node" parent="."]
 
