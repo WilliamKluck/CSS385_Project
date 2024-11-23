@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://dssi2ira5l6v3"]
+
+[ext_resource type="Script" path="res://Scripts/largeppotion.gd" id="1_jspe7"]
+[ext_resource type="Texture2D" uid="uid://bc8ch1hjr3jj7" path="res://Assets/2D Pixel Dungeon Asset Pack/items and trap_animation/flasks/flasks_3_1.png" id="1_oe8vc"]
+[ext_resource type="Texture2D" uid="uid://idapmjnjaecu" path="res://Assets/2D Pixel Dungeon Asset Pack/items and trap_animation/flasks/flasks_3_2.png" id="2_nvoif"]
+[ext_resource type="Texture2D" uid="uid://dogqvecig4mf0" path="res://Assets/2D Pixel Dungeon Asset Pack/items and trap_animation/flasks/flasks_3_3.png" id="3_rv8f7"]
+[ext_resource type="Texture2D" uid="uid://bhmd3gxsvkrxa" path="res://Assets/2D Pixel Dungeon Asset Pack/items and trap_animation/flasks/flasks_3_4.png" id="4_kkoim"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f84d6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_oe8vc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_nvoif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_rv8f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_kkoim")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mlqck"]
+size = Vector2(8.5, 10)
+
+[node name="LargePowerPotion" type="Node2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_jspe7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f84d6")
+autoplay = "default"
+frame_progress = 0.948
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_mlqck")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

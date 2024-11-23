@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED = 400.0
+const SPEED = 450.0
 var power = 1
 var direction = null
 var active = false
