@@ -22,3 +22,4 @@ func movement() -> void:
 func check_position() -> void:
 	if active and (global_position.x < 0 or global_position.x > 1300 or global_position.y < 0 or global_position.y > 800):
 		active = false
+		direction = null
