@@ -1,8 +1,8 @@
 [gd_scene load_steps=17 format=3 uid="uid://c4jjwpwgl261n"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ya5b3"]
-[ext_resource type="AudioStream" uid="uid://cyawcmyijevpe" path="res://Assets/pew-pew-lame-sound-effect.mp3" id="2_odyj3"]
-[ext_resource type="Texture2D" uid="uid://bec211ipem3lu" path="res://Assets/Adventurer Sprite Sheet v1.5.png" id="2_p3p4n"]
+[ext_resource type="AudioStream" uid="uid://cyawcmyijevpe" path="res://Assets/audio/pew-pew-lame-sound-effect.mp3" id="2_odyj3"]
+[ext_resource type="Texture2D" uid="uid://bec211ipem3lu" path="res://Assets/room/Adventurer Sprite Sheet v1.5.png" id="2_p3p4n"]
 [ext_resource type="Script" path="res://Scenes/shoot_sound_effect.gd" id="3_hijfj"]
 [ext_resource type="AudioStream" uid="uid://djew7i72asxir" path="res://Assets/audio/damage.mp3" id="5_y7hun"]
 
