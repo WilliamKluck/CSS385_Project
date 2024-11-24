@@ -718,7 +718,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_14vfl"]
 size = Vector2(10, 9.34581)
 
-[node name="Room2" type="TileMap"]
+[node name="Room" type="TileMap"]
 position = Vector2(-315, 91)
 scale = Vector2(5, 3.745)
 tile_set = SubResource("TileSet_eydq5")
