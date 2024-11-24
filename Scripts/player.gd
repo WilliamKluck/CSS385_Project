@@ -242,6 +242,12 @@ func play_shoot_sound_effect():
 	$SoundEffects.add_child(newPlayer)
 	newPlayer.play()
 	
+func play_damage_sound_effect():
+	var newPlayer = $SoundEffects/Damage.duplicate()
+	newPlayer.name = "Damage" + str(Time.get_ticks_msec())
+	$SoundEffects.add_child(newPlayer)
+	newPlayer.play()
+	
 # Streams audio files
 func play_music(audio_name: String) -> void:
 	var music = $SoundEffects/BackgroundMusic
@@ -347,6 +353,7 @@ func doDamage() -> void:
 	hud_hp_label.set_text(heart.repeat(hp))
 	last_hit_tick = Time.get_ticks_msec()
 	
+	play_damage_sound_effect()
 	set_animation("takeDamage") # Play damage animation
 	damage_animation_lock = true
 	
