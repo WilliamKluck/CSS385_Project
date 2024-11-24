@@ -57,6 +57,7 @@ var enter_coords = {
 } # the location the player will walk to from the entrance
 
 func _ready() -> void:
+	show_controls()
 	initialize_room() # Setup entry points
 	initialize_player_position() # Spawn player at correct entrance
 	update_health_ui() # Show initial health
@@ -365,6 +366,9 @@ func handle_death() -> void:
 # ------------------------------------------ End Damage and Input Helpers --------------------------
 
 # ------------------------------------------ Scene Loading Helpers ---------------------------------
+func show_controls() -> void:
+	room_node.call_deferred("toggle_pause_menu")
+	
 # Load the final end scene when the game is complete
 func loadEndScene() -> void:
 	var end_scene_path = "res://Scenes/end.tscn"
