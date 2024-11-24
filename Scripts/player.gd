@@ -17,6 +17,12 @@ var target_position = null # Position the player moves toward in auto-walk
 var current_animation = "" # Track the current animation
 var damage_animation_lock = false
 
+# Audio Variables
+var current_audio = ""
+@export var audio_files = {
+	"battle": "res://Assets/audio/battle.mp3"
+}
+
 # Health Variables
 var hp = 10
 const heart = "❤️"
@@ -58,6 +64,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if room_node.paused:
 		return
+	set_music()
 	# Control logic depending on stage state
 	if room_node.begin == 1: # Ongoing stage
 		process_stage_in_progress()
@@ -135,9 +142,14 @@ func handle_entry_node(entry_node: Node2D) -> void:
 
 	# Determine the next room based on current progress
 	var next_scene_num = stages_complete + 2
+	
+	stages_complete += 1 # Track stage progression
+	if stages_complete == max_stages: # Check if all stages are complete
+		loadEndScene() # Load the end scene if this is the last stage
+		return
+	
 	var next_scene_path = "res://Scenes/room" + str(next_scene_num) + ".tscn"
 	var next_scene_resource = load(next_scene_path)
-	
 	if not next_scene_resource: # Handle missing or incorrect room paths
 		print("Error: Could not load next scene.")
 		loadEndScene()
@@ -153,11 +165,7 @@ func handle_entry_node(entry_node: Node2D) -> void:
 	next_room_node.current_enemy_count = room_node.current_enemy_count # Transfer enemy count
 	next_room_node.enemy_difficulty = room_node.enemy_difficulty
 	room_node.begin = 0 # Reset the room's state
-	stages_complete += 1 # Track stage progression
 	
-	if stages_complete == max_stages: # Check if all stages are complete
-		loadEndScene() # Load the end scene if this is the last stage
-		return
 	
 	transferChildren(next_room_node) # Transfer room contents to the new scene
 # ------------------------------------------ End Stage Process Helpers -----------------------------
@@ -213,6 +221,41 @@ func move(moveDirection) -> void:
 		set_animation("idle") # Default to idle when not moving
 # ------------------------------------------ End Projectile and Movement Helpers -------------------
 
+# ------------------------------------------ Audio Helpers -----------------------------------------
+func set_music() -> void:
+	#if room_node.paused:
+		#play_music("pause")
+	#elif room_node.dead:
+		#play_music("dead")
+	#elif len(room_node.enemies) > 0:
+	play_music("battle")
+	#elif stages_complete == max_stages:
+		#play_music("end")
+	#else:
+		#play_music("idle")
+		
+# Play shoot sound effect
+func play_shoot_sound_effect():
+	# duplicate to enable playing sound effects in parallel
+	var newPlayer = $SoundEffects/Shoot.duplicate()
+	newPlayer.name = "Shoot" + str(Time.get_ticks_msec())
+	$SoundEffects.add_child(newPlayer)
+	newPlayer.play()
+	
+# Streams audio files
+func play_music(audio_name: String) -> void:
+	var music = $SoundEffects/BackgroundMusic
+	if current_audio != audio_name:
+		current_audio = audio_name
+		
+		# Load the audio steam dynamically
+		var stream = ResourceLoader.load(audio_files[audio_name], "AudioStream")
+		if stream:
+			music.stream = stream
+			music.play()
+		else:
+			print("Failed to load audio: " + audio_name)
+	
 # ------------------------------------------ Animation Helpers -------------------------------------
 func set_animation(new_animation: String) -> void:
 	if damage_animation_lock and new_animation != "die":
@@ -292,14 +335,6 @@ func shoot_projectile() -> void:
 		
 		# Apply the angle to the projectile's rotation
 		found_available_projectile.rotation = angle  # Apply this angle in radians
-		
-# Play shoot sound effect
-func play_shoot_sound_effect():
-	# duplicate to enable playing sound effects in parallel
-	var newPlayer = $SoundEffects/Shoot.duplicate()
-	newPlayer.name = "Shoot" + str(Time.get_ticks_msec())
-	$SoundEffects.add_child(newPlayer)
-	newPlayer.play()
 
 # Apply damage to the player based on damage counters and delay
 func doDamage() -> void:
