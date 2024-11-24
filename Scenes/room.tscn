@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://culwwhothebat"]
 
-[ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/mainlevbuild.png" id="1_glev2"]
+[ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/room/mainlevbuild.png" id="1_glev2"]
 [ext_resource type="Script" path="res://Scripts/room.gd" id="2_6e6db"]
 [ext_resource type="PackedScene" uid="uid://c4jjwpwgl261n" path="res://Scenes/Player.tscn" id="2_7uw3i"]
 [ext_resource type="PackedScene" uid="uid://reggauq4vlhj" path="res://Scenes/hud.tscn" id="5_ev4xr"]

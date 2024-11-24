@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://b68t4bucdixu7"]
 
-[ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/mainlevbuild.png" id="1_65daq"]
+[ext_resource type="Texture2D" uid="uid://d2xs1c0oqjyis" path="res://Assets/room/mainlevbuild.png" id="1_65daq"]
 [ext_resource type="Script" path="res://Scripts/room.gd" id="2_4xrjc"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jtvvc"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ra83"]
 texture = ExtResource("1_65daq")
 40:0/0 = 0
 41:0/0 = 0
@@ -1073,7 +1073,7 @@ texture = ExtResource("1_65daq")
 [sub_resource type="TileSet" id="TileSet_s82ap"]
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 6
-sources/0 = SubResource("TileSetAtlasSource_jtvvc")
+sources/0 = SubResource("TileSetAtlasSource_0ra83")
 
 [node name="Room" type="TileMap"]
 position = Vector2(65, 173)

@@ -371,7 +371,7 @@ func show_controls() -> void:
 	
 # Load the final end scene when the game is complete
 func loadEndScene() -> void:
-	var end_scene_path = "res://Scenes/end.tscn"
+	var end_scene_path = "res://Scenes/end.tscn/"
 	var base = get_tree().root
 
 	# Cleanup and free all existing nodes
@@ -381,6 +381,7 @@ func loadEndScene() -> void:
 
 	# Load and instance the new scene
 	var new_scene = load(end_scene_path).instantiate()
+	
 	base.add_child(new_scene)
 
 # Transfer children (e.g., enemies, player) to the next room
@@ -426,3 +427,7 @@ func _on_enemy_detector_body_exited(body: Node2D) -> void:
 	#if hasattr(body, "power"):
 	damage_counter -= body.power
 # ------------------------------------------ End Collision Detection Helpers -----------------------
+
+
+func _on_area_2d_area_entered(_area: Area2D) -> void:
+	move(Vector2(-10,0)) # Replace with function body.

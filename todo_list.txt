@@ -3,13 +3,16 @@
 	☑️ movement
 	☑️ attack
 	attack animation
-	drop object
-	randomize hp, speed, attack ranges
+	☑️ drop object
+	randomize hp, speed, attack ranges (scaling)
 
+menus:
+	win menu on end
+	
 *object:
-	health restore
+	☑️ health restore
 	projectile speed up (for a time)
-	damage boost
+	☑️ damage boost
 
 projectile
 	speed up implement
@@ -20,17 +23,18 @@ projectile
 	
 
 **updates
-	game pitch
+	☑️ game pitch
 	☑️ splash screen
-	game mechanics guide
-	basic objective update
-	synopsis
+	☑️ game mechanics guide
+	☑️ basic objective update
+	☑️ synopsis
 
 *room
 	
-	2/3 variants
+	☑️ 2/3 variants
 	☑️ implement entering the room - entrance blocked
 	☑️ implement leaving the room - exit opens
+	fix nodes to be more responsive
 
 **hud
 	☑️ health bar top
