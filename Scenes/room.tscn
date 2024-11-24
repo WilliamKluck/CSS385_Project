@@ -2207,10 +2207,10 @@ scale = Vector2(3.23471, 2.46511)
 [node name="PauseMenu" parent="UI" instance=ExtResource("7_bxa4p")]
 visible = false
 z_index = 2
-offset_left = -397.0
-offset_top = -139.0
-offset_right = -397.0
-offset_bottom = -139.0
-scale = Vector2(2.77467, 2.56688)
+offset_left = -25.0
+offset_top = 8.0
+offset_right = -25.0
+offset_bottom = 8.0
+scale = Vector2(1, 0.925)
 
 [node name="HUD" parent="UI" instance=ExtResource("5_ev4xr")]
