@@ -431,3 +431,7 @@ func _on_enemy_detector_body_exited(body: Node2D) -> void:
 
 func _on_area_2d_area_entered(_area: Area2D) -> void:
 	move(Vector2(-10,0)) # Replace with function body.
+
+
+func _on_stage_clear_finished() -> void:
+	play_music("battle")

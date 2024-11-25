@@ -20,6 +20,7 @@ func _process(_delta: float) -> void:
 			enemy_nodes.erase(node)
 			if len(enemy_nodes) == 0:
 				room_node.begin = 2 
+				$"../Player/SoundEffects/StageClear".play()
 				disable_tiles()
 	
 func enable_tiles() -> void:

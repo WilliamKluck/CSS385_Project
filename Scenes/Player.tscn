@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://c4jjwpwgl261n"]
+[gd_scene load_steps=18 format=3 uid="uid://c4jjwpwgl261n"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_ya5b3"]
 [ext_resource type="AudioStream" uid="uid://cyawcmyijevpe" path="res://Assets/audio/pew-pew-lame-sound-effect.mp3" id="2_odyj3"]
 [ext_resource type="Texture2D" uid="uid://bec211ipem3lu" path="res://Assets/room/Adventurer Sprite Sheet v1.5.png" id="2_p3p4n"]
 [ext_resource type="Script" path="res://Scenes/shoot_sound_effect.gd" id="3_hijfj"]
 [ext_resource type="AudioStream" uid="uid://djew7i72asxir" path="res://Assets/audio/damage.mp3" id="5_y7hun"]
+[ext_resource type="AudioStream" uid="uid://b2c48dieycplf" path="res://Assets/audio/Level Complete Skylanders Giants.mp3" id="6_e4jen"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jmba"]
 size = Vector2(13, 24)
@@ -178,6 +179,9 @@ script = ExtResource("3_hijfj")
 
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="SoundEffects"]
 
+[node name="StageClear" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource("6_e4jen")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_iym4r")
@@ -188,4 +192,5 @@ autoplay = "idle"
 [connection signal="body_exited" from="EnemyDetector" to="." method="_on_enemy_detector_body_exited"]
 [connection signal="finished" from="SoundEffects/Shoot" to="SoundEffects/Shoot" method="_on_finished"]
 [connection signal="finished" from="SoundEffects/Damage" to="SoundEffects/Damage" method="_on_finished"]
+[connection signal="finished" from="SoundEffects/StageClear" to="." method="_on_stage_clear_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
