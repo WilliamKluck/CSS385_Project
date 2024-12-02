@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://reggauq4vlhj"]
+[gd_scene load_steps=3 format=3 uid="uid://reggauq4vlhj"]
 
+[ext_resource type="FontFile" uid="uid://b1jpd45h44w3a" path="res://Assets/misc/seguiemj.ttf" id="1_58pan"]
 [ext_resource type="Script" path="res://Scripts/rich_text_label.gd" id="1_mjleh"]
 
 [node name="HUD" type="CanvasLayer"]
@@ -9,4 +10,5 @@ offset_left = 20.0
 offset_top = 21.0
 offset_right = 452.0
 offset_bottom = 48.0
+theme_override_fonts/normal_font = ExtResource("1_58pan")
 script = ExtResource("1_mjleh")
