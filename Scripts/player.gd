@@ -51,7 +51,7 @@ var children_to_transfer = []
 const entry_map = {"Left": "Right", "Right": "Left", "Top": "Bottom", "Bottom": "Top"}
 var enter_coords = {
 	"Left": Vector2(182.9998, 391.9999), 
-	"Top": Vector2(613.0012, 221.9999), 
+	"Top": Vector2(613.0012, 233.9999), 
 	"Right": Vector2(1097.999, 408.9995), 
 	"Bottom": Vector2(614.9999, 559.9992)
 } # the location the player will walk to from the entrance
@@ -63,6 +63,11 @@ func _ready() -> void:
 	update_health_ui() # Show initial health
 
 func _physics_process(_delta: float) -> void:
+	# hacky way of forcing the player out of the wall
+	position.x = max(position.x, 6)
+	position.x = min(position.x, 378)
+	position.y = max(position.y, 27)
+	position.y = min(position.y, 212)
 	if room_node.paused:
 		return
 	set_music()
@@ -310,6 +315,7 @@ func create_shoot_animation() -> void:
 # Process player input for movement and actions
 func handleInput() -> void:
 	var moveDirection = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	moveDirection = moveDirection.normalized()
 	move(moveDirection)
 	check_and_shoot()
 
