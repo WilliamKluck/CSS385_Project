@@ -91,7 +91,6 @@ func _physics_process(_delta: float) -> void:
 			elif min_distance == abs(global_position.y - pit_dict["lower_pit"]):
 				global_position.y = pit_dict["lower_pit"]
 
-				
 	if room_node.paused:
 		return
 	set_music()
