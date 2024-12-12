@@ -315,6 +315,7 @@ func create_shoot_animation() -> void:
 # Process player input for movement and actions
 func handleInput() -> void:
 	var moveDirection = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	moveDirection = moveDirection.normalized()
 	move(moveDirection)
 	check_and_shoot()
 
