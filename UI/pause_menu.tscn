@@ -24,7 +24,7 @@ scale = Vector2(2.02716, 2.094)
 
 [node name="Keyboard-layout" type="Sprite2D" parent="."]
 show_behind_parent = true
-position = Vector2(11, -12)
+position = Vector2(28, -7)
 scale = Vector2(2, 2)
 texture = ExtResource("2_2r4tf")
 
