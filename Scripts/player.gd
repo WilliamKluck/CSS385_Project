@@ -351,6 +351,8 @@ func shoot_projectile() -> void:
 
 # Apply damage to the player based on damage counters and delay
 func doDamage() -> void:
+	if room_node.dead:
+		return
 	if damage_counter <= 0:
 		return
 	if last_hit_tick and Time.get_ticks_msec() - last_hit_tick < hit_delay:
@@ -368,6 +370,7 @@ func doDamage() -> void:
 		handle_death()
 
 func handle_death() -> void:
+	room_node.dead = true
 	set_animation("die")
 # ------------------------------------------ End Damage and Input Helpers --------------------------
 
