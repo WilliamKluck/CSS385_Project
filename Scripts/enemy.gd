@@ -17,10 +17,15 @@ var last_player_seen_loc = null
 var direction = null
 
 func _ready():
+	$HealthBar/ProgressBar.set_max_health(hp)
 	potion = potion_drop[randi() % 4]
 	var potion_path = "res://Scenes/" + potion + ".tscn"
 	potion = load(potion_path)
 
+func set_hp(value_to_set):
+	hp *= value_to_set
+	$HealthBar/ProgressBar.set_max_health(hp)
+	
 func _physics_process(_delta: float) -> void:
 	frame += 1
   
@@ -77,6 +82,7 @@ func _on_projectile_detector_body_entered(body: Node2D) -> void:
 		body.active = false
 		body.direction = null
 		hp -= body.power
+		$HealthBar/ProgressBar.decrease_health(body.power)
 		
 		# if die, delete self
 		if hp <= 0:

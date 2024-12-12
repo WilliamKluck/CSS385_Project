@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://tmxgkbhdyxf4"]
+
+[ext_resource type="Script" path="res://Scenes/progress_bar.gd" id="1_h2eqj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yjt1v"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1svgy"]
+bg_color = Color(0.88373, 0.154391, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fo4kh"]
+bg_color = Color(0.429472, 0.402258, 0.390491, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5rf43"]
+bg_color = Color(0.858483, 0.713934, 0.326089, 1)
+
+[node name="HealthBar" type="Node2D"]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 251.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_yjt1v")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1svgy")
+value = 100.0
+show_percentage = false
+script = ExtResource("1_h2eqj")
+
+[node name="ProgressBar2" type="ProgressBar" parent="ProgressBar"]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 251.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fo4kh")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5rf43")
+value = 60.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="ProgressBar"]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="ProgressBar/Timer" to="ProgressBar" method="_on_timer_timeout"]

@@ -77,8 +77,8 @@ func create_new_enemy(enemy_holder: Node, enemy_id: int) -> void:
 	new_enemy.name = "Enemy" + str(enemy_id)
 	new_enemy.scale = ENEMY_SCALE
 	enemy_holder.add_child(new_enemy)
-	new_enemy.hp *= enemy_difficulty
-	new_enemy.power *= enemy_difficulty
+	new_enemy.set_hp(enemy_difficulty)
+	new_enemy.power = enemy_difficulty
 
 # Place all enemies at random valid positions
 func place_enemies(enemy_holder: Node, locations: Array) -> bool:
