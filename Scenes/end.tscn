@@ -388,9 +388,9 @@ texture = ExtResource("1_ni8ab")
 9:20/0 = 0
 10:20/0 = 0
 12:20/0 = 0
-12:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+12:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 0.25, -8, 0.625, 8, -8, 8)
 14:20/0 = 0
-14:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+14:20/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.5, -8, 8, -8, 8, 8, -0.625, 8)
 15:20/0 = 0
 16:20/0 = 0
 17:20/0 = 0
@@ -731,7 +731,7 @@ layer_1/tile_data = PackedInt32Array(65542, 917505, 27, 131078, 917505, 28, 7, 9
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(136, 45.1268)
 collision_layer = 4
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("5_v2dj4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
@@ -767,6 +767,7 @@ autoplay = "idle"
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(231.6, 163.685)
 scale = Vector2(1.408, 7.18276)
+collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]

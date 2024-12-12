@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://d0x2ugfnixdy" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_2.png" id="3_g73m2"]
 [ext_resource type="Texture2D" uid="uid://du8mbmojodyyp" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_3.png" id="4_ipp73"]
 [ext_resource type="Texture2D" uid="uid://he0r5nbwk6wb" path="res://Assets/2D Pixel Dungeon Asset Pack/Character_animation/monsters_idle/skull/v2/skull_v2_4.png" id="5_or1n3"]
-[ext_resource type="PackedScene" uid="uid://tmxgkbhdyxf4" path="res://Scenes/health_bar.tscn" id="6_8dt84"]
+[ext_resource type="PackedScene" uid="uid://c4ne2pbw18d5v" path="res://Scenes/health_bar.tscn" id="6_8dt84"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ihhwe"]
 size = Vector2(29, 37)
