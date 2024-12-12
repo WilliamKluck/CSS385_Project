@@ -18,11 +18,12 @@ var rng = RandomNumberGenerator.new()
 @onready var death_menu = $UI/DeathMenu
 var paused = false
 var dead = false
-
+var pit = false
 func _ready() -> void:
 	pass
 
 func _process(_delta: float) -> void:
+	print(pit)
 	if not initialized:
 		setup_enemies()
 	handle_pause_input()

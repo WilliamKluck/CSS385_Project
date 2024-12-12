@@ -88,8 +88,7 @@ func handleInput() -> void:
 	move(moveDirection)
 
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("entered")
+func _on_area_2d_body_entered(_body: Node2D) -> void:
 	exit = true
 
 

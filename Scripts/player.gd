@@ -68,6 +68,30 @@ func _physics_process(_delta: float) -> void:
 	position.x = min(position.x, 378)
 	position.y = max(position.y, 27)
 	position.y = min(position.y, 212)
+	if room_node.pit == true:
+		var pit_dict = {
+			"right_pit": 736.0004, 
+			"left_pit": 521.0009, 
+			"upper_pit": 340.0001, 
+			"lower_pit": 500.0007
+		}
+		if global_position.x < pit_dict["right_pit"] and global_position.x > pit_dict["left_pit"] and global_position.y > pit_dict["upper_pit"] and global_position.y < pit_dict["lower_pit"]:
+			var min_distance = min(
+				abs(global_position.x - pit_dict["right_pit"]),
+				abs(global_position.x - pit_dict["left_pit"]),
+				abs(global_position.y - pit_dict["upper_pit"]),
+				abs(global_position.y - pit_dict["lower_pit"])
+			)
+			if min_distance == abs(global_position.x - pit_dict["right_pit"]):
+				global_position.x = pit_dict["right_pit"]
+			elif min_distance == abs(global_position.x - pit_dict["left_pit"]):
+				global_position.x = pit_dict["left_pit"]
+			elif min_distance == abs(global_position.y - pit_dict["upper_pit"]):
+				global_position.y = pit_dict["upper_pit"]
+			elif min_distance == abs(global_position.y - pit_dict["lower_pit"]):
+				global_position.y = pit_dict["lower_pit"]
+
+				
 	if room_node.paused:
 		return
 	set_music()
@@ -148,6 +172,7 @@ func handle_entry_node(entry_node: Node2D) -> void:
 
 	# Determine the next room based on current progress
 	var next_scene_num = stages_complete + 2
+	print("SCENE EQUALS ", next_scene_num)
 	
 	stages_complete += 1 # Track stage progression
 	if stages_complete == max_stages: # Check if all stages are complete
@@ -167,7 +192,10 @@ func handle_entry_node(entry_node: Node2D) -> void:
 		print("Error: 'Room' node not found in the new scene")
 		return
 		
-	
+	if next_scene_num == 2:
+		next_room_node.pit = true
+	else:
+		next_room_node.pit = false
 	next_room_node.current_enemy_count = room_node.current_enemy_count # Transfer enemy count
 	next_room_node.enemy_difficulty = room_node.enemy_difficulty
 	room_node.begin = 0 # Reset the room's state
