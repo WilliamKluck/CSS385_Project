@@ -2112,7 +2112,7 @@ position = Vector2(111, 446)
 scale = Vector2(2.9394, 2.20081)
 
 [node name="Top" type="Node2D" parent="RoomEntryPoints"]
-position = Vector2(629, 122)
+position = Vector2(629, 209)
 scale = Vector2(2.9394, 2.20081)
 
 [node name="Right" type="Node2D" parent="RoomEntryPoints"]
