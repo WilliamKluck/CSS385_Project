@@ -58,6 +58,6 @@ You have died.
  get out of the dungeon."
 horizontal_alignment = 1
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Restart" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

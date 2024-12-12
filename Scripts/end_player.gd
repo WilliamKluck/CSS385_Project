@@ -94,6 +94,9 @@ func _on_area_2d_body_entered(_body: Node2D) -> void:
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	var video = get_node("../VideoStreamPlayer")
+	$"../WinMenu/MarginContainer/VBoxContainer/Restart".visible = true
+	$"../WinMenu/MarginContainer/VBoxContainer/Quit".visible = true
+	$"../WinMenu/MarginContainer/VBoxContainer/Instructions".text = "Play Again?"
 	video.play()
 	
 
